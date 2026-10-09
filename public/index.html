@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern, responsive full-stack calculator application with clean UI and Node.js Express backend integration.">
+  <title>Modern Calculator | Full-Stack App</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-container">
+    <!-- Header with semantic title -->
+    <header class="app-header">
+      <h1 class="app-title">Web Calculator</h1>
+      <div class="status-indicator" id="statusIndicator" title="Backend Server Status">
+        <span class="status-dot"></span>
+        <span class="status-text" id="statusText">Connecting...</span>
+      </div>
+    </header>
+
+    <div class="calculator-card" id="calculatorCard">
+      <!-- Calculator Top Bar -->
+      <div class="calc-top-bar">
+        <div class="brand-tag">
+          <span class="accent-dot"></span>
+          <span>CALC.IO</span>
+        </div>
+        <div class="top-controls">
+          <button class="sound-toggle-btn" id="soundToggleBtn" aria-label="Toggle Sound FX" title="Toggle Sound FX">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path class="sound-wave" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path class="sound-wave" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+          </button>
+          <button class="history-toggle-btn" id="historyToggleBtn" aria-label="Toggle History Panel" title="Calculation History">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span class="history-badge" id="historyBadge">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Display Screen -->
+      <section class="display-container" aria-label="Calculator Screen">
+        <div class="formula-line" id="formulaDisplay" aria-live="polite"></div>
+        <div class="current-line" id="mainDisplay" aria-live="polite">0</div>
+      </section>
+
+      <!-- Keypad Grid -->
+      <section class="keypad-grid" aria-label="Calculator Keypad">
+        <!-- Row 1: Function Keys -->
+        <button type="button" class="calc-btn btn-function" id="btn-clear" data-action="clear" aria-label="Clear All">AC</button>
+        <button type="button" class="calc-btn btn-function" id="btn-negate" data-action="negate" aria-label="Toggle Sign">+/−</button>
+        <button type="button" class="calc-btn btn-function" id="btn-percent" data-action="percent" aria-label="Percentage">%</button>
+        <button type="button" class="calc-btn btn-operator" id="btn-divide" data-operator="÷" aria-label="Divide">÷</button>
+
+        <!-- Row 2 -->
+        <button type="button" class="calc-btn btn-number" id="btn-7" data-number="7">7</button>
+        <button type="button" class="calc-btn btn-number" id="btn-8" data-number="8">8</button>
+        <button type="button" class="calc-btn btn-number" id="btn-9" data-number="9">9</button>
+        <button type="button" class="calc-btn btn-operator" id="btn-multiply" data-operator="×" aria-label="Multiply">×</button>
+
+        <!-- Row 3 -->
+        <button type="button" class="calc-btn btn-number" id="btn-4" data-number="4">4</button>
+        <button type="button" class="calc-btn btn-number" id="btn-5" data-number="5">5</button>
+        <button type="button" class="calc-btn btn-number" id="btn-6" data-number="6">6</button>
+        <button type="button" class="calc-btn btn-operator" id="btn-subtract" data-operator="−" aria-label="Subtract">−</button>
+
+        <!-- Row 4 -->
+        <button type="button" class="calc-btn btn-number" id="btn-1" data-number="1">1</button>
+        <button type="button" class="calc-btn btn-number" id="btn-2" data-number="2">2</button>
+        <button type="button" class="calc-btn btn-number" id="btn-3" data-number="3">3</button>
+        <button type="button" class="calc-btn btn-operator" id="btn-add" data-operator="+" aria-label="Add">+</button>
+
+        <!-- Row 5 -->
+        <button type="button" class="calc-btn btn-number" id="btn-0" data-number="0">0</button>
+        <button type="button" class="calc-btn btn-number" id="btn-decimal" data-action="decimal">.</button>
+        <button type="button" class="calc-btn btn-function" id="btn-backspace" data-action="backspace" aria-label="Backspace">⌫</button>
+        <button type="button" class="calc-btn btn-equals" id="btn-equals" data-action="calculate" aria-label="Equals">=</button>
+      </section>
+
+      <!-- Keyboard shortcuts helper -->
+      <footer class="calc-footer">
+        <span>Keyboard: 0–9, + − * /, Enter (=), Backspace, Esc (AC)</span>
+      </footer>
+    </div>
+
+    <!-- Slide-over History Drawer -->
+    <aside class="history-drawer" id="historyDrawer" aria-label="Calculation History Panel">
+      <div class="drawer-header">
+        <h3>Calculation History</h3>
+        <button class="close-drawer-btn" id="closeDrawerBtn" aria-label="Close history">✕</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="history-empty">No calculations yet</div>
+      </div>
+      <div class="drawer-footer">
+        <button type="button" class="clear-history-btn" id="clearHistoryBtn">Clear History</button>
+      </div>
+    </aside>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

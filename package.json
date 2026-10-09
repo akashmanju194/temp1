@@ -1,0 +1,26 @@
+{
+  "name": "fullstack-calculator",
+  "version": "1.0.0",
+  "description": "A full-stack calculator application with a modern frontend and Express.js backend API.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akashmanju194/temp1.git"
+  },
+  "keywords": [
+    "calculator",
+    "express",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
